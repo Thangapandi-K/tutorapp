@@ -16,11 +16,17 @@ const CurriculamForm = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    try {
-      
-      navigate("user/curriculam");
+    if( data.topic || data.goal ) {
+      try {
+      console.log(import.meta.env.VITE_BASE_URL);
+      const response = await axios.get(import.meta.env.VITE_BASE_URL + `/get-curriculam?topic=${data.topic}&goal=${data.goal}&time=${data.time}`);
+      setCurriculam(response.data?.data);
+      localStorage.setItem("curriculam", JSON.stringify(response.data?.data));
+      console.log(response.data);
+      navigate("curriculam");
     } catch (error) {
       console.log(error);
+    }
     }
   };
 
